@@ -15,7 +15,7 @@ public class TCPClient {
   static Socket socket;
   static BufferedReader fromServer;
   static DataOutputStream toServer;
-  static Trader trader;
+  static Trader trader; PriceService
 
   public static void main(String[] args) throws Exception {
     user.output("Please provide IP:PORT of the server, or hit enter to leave the defaults : ");

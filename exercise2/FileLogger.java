@@ -48,7 +48,7 @@ public class FileLogger {
     }
 
     //Search the specified stock's data between dateMin and dateMax
-    public void searchLogFile( String dMin, String dMax, String actionName){
+    public String searchLogFile( String dMin, String dMax, String actionName){
         //Input file which needs to be parsed
         String fileToParse = pathToLogFile;
         BufferedReader fileReader = null;
@@ -58,6 +58,7 @@ public class FileLogger {
         final String DELIMITER = ";";
         try
         {
+            String linesMatched = "";
             String line = "";
             //Create the file reader
             fileReader = new BufferedReader(new FileReader(fileToParse));
@@ -75,13 +76,16 @@ public class FileLogger {
 
                 //print the token if the transaction date is between the min and max date
                 if((transactionDate.after(dateMin))&&(transactionDate.before(dateMax)) && (actionName.equals(tokens[1]))){
-                    for(String token : tokens)
-                    {
+                    //for(String token : tokens)
+                    //{
                         //Print all tokens
-                        System.out.println(token);
-                    }
+                        //System.out.println(token);
+                        linesMatched += ("Date : " + tokens[0] + " Nom de l'action : " + tokens[1] + " Prix : " + tokens[2] + "\n");
+                    //}
                 }
             }
+
+            return linesMatched;
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -94,6 +98,7 @@ public class FileLogger {
                 e.printStackTrace();
             }
         }
+        return "";
     }
 
    /* Usage exemple of fileLogger

@@ -8,22 +8,15 @@ public class PriceService {
 
         XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 
+
         config.setServerURL(new URL("http://127.0.0.1:8080/xmlrpc"));
         XmlRpcClient client = new XmlRpcClient();
         client.setConfig(config);
 
-        Object[] params = new Object[]{new Integer(33), new Integer(9)};
-        System.out.println("About to get results...(params[0] = " + params[0]
-                + ", params[1] = " + params[1] + ")." );
+        Object[] params = new Object[]{new String("25/02/2018"), new String("25/03/2018"), new String(String.valueOf(StockName.AAPL))};
 
-        Integer result = (Integer) client.execute("Calculator.add", params);
-        System.out.println("Add Result = " + result );
-
-        result = (Integer) client.execute("Calculator.sub", params);
-        System.out.println("Sub Result = " + result );
-
-        result = (Integer) client.execute("Calculator.mul", params);
-        System.out.println("Mul Result = " + result );
+        Integer result = (Integer) client.execute("Broker.searchAction", params);
+        System.out.println("Liste des transactions de " + params[2] + ":\n" + result );
 
     }
 }
