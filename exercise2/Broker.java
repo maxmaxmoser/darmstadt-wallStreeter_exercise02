@@ -132,7 +132,6 @@ public class Broker {
 
     public static void main (String [] args) {
         try {
-
             WebServer webServer = new WebServer(port);
 
             XmlRpcServer xmlRpcServer = webServer.getXmlRpcServer();
@@ -148,7 +147,7 @@ public class Broker {
 
             webServer.start();
 
-            System.out.println("The Calculator Server has been started..." );
+            System.out.println("The broker is started.." );
 
         } catch (Exception exception) {
             System.err.println("JavaServer: " + exception);
