@@ -1,4 +1,4 @@
 public enum MessageHeaderField {
-    method,
-    bodyLength
+    requestMethod,
+    responseStatus,
 }

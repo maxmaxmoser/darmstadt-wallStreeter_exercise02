@@ -23,9 +23,9 @@ public class Trader {
         Message toSend = sa.toMessage();
 
         if(sa instanceof StockAsk){
-            toSend.setHeaderField(MessageHeaderField.method, "addSellActionToList");
+            toSend.setHeaderField(MessageHeaderField.requestMethod, "addSellActionToList");
         } else if (sa instanceof StockBid){
-            toSend.setHeaderField(MessageHeaderField.method, "addSellActionToList");
+            toSend.setHeaderField(MessageHeaderField.requestMethod, "addBuyActionToList");
         }
 
         return toSend;
@@ -52,7 +52,7 @@ public class Trader {
             }
         } catch (IOException e){ }
 
-        return toSend.setHeaderField(MessageHeaderField.method, methodName).setBodyParam("uuid", uuid);
+        return toSend.setHeaderField(MessageHeaderField.requestMethod, methodName).setBodyParam("uuid", uuid);
     }
 
     public static StockAction getStockActionFormCLI(){

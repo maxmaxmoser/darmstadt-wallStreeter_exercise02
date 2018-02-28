@@ -12,12 +12,13 @@ public class MultithreadedTCPServer {
     public static void main(String[] args) throws Exception{
         int port = 9999;
         ServerSocket listenSocket = new ServerSocket(port);
+        Broker b = new Broker();
         System.out.println("Multithreaded Server starts on Port "+port);
         while (true){
             Socket client = listenSocket.accept();
             System.out.println("Connection with: " +     // Output connection
                     client.getRemoteSocketAddress());   // (Client) address
-            new StockActionService(client).start();
+            new StockActionService(client, b).start();
         }
     }
 }

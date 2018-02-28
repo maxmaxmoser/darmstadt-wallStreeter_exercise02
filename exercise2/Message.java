@@ -3,10 +3,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Message {
-    final static String MESSAGE_DELIMIER = "---------------\n";
     final static String KV_DELIMITER = "=";
-    final static String FIELD_DELIMIER = "\n";
-    final static String HEADER_DELIMITER = "\n\n";
+    final static String FIELD_DELIMITER = "\n";
+    final static String HEADER_DELIMITER = "---------------\n";
     private Map<MessageHeaderField, String> header = new HashMap<MessageHeaderField, String>();
     private Map<String, String> body = new HashMap<String, String>();
 
@@ -14,12 +13,12 @@ public class Message {
 
     public Message(String strRepresentation) {
         String messageParts[] = strRepresentation.split(HEADER_DELIMITER);
-        parseFields(messageParts[0], true);
-        parseFields(messageParts[1], false);
+        if (messageParts.length >= 2) parseFields(messageParts[1], true);
+        if(messageParts.length >= 3) parseFields(messageParts[2], false);
     }
 
     private void parseFields(String str, boolean header){
-        String fieldAssignements[] = str.split(FIELD_DELIMIER);
+        String fieldAssignements[] = str.split(FIELD_DELIMITER);
         String assignementParts[] = null;
         String fieldName = null;
         String fieldValue = null;
@@ -43,14 +42,10 @@ public class Message {
 
         for (Object o : body.entrySet()) {
             Map.Entry pair = (Map.Entry) o;
-            b.append(pair.getKey() + KV_DELIMITER + pair.getValue() + FIELD_DELIMIER);
+            b.append(pair.getKey() + KV_DELIMITER + pair.getValue() + FIELD_DELIMITER);
         }
 
         return b.toString();
-    }
-
-    public void autoSetBodyLengthHeader() {
-        setHeaderField(MessageHeaderField.bodyLength, Integer.toString(getBodyString().length()));
     }
 
     public String getHeaderString() {
@@ -58,15 +53,23 @@ public class Message {
 
         for (Object o : header.entrySet()) {
             Map.Entry pair = (Map.Entry) o;
-            h.append(((MessageHeaderField) pair.getKey()).name() + KV_DELIMITER + pair.getValue() + FIELD_DELIMIER);
+            h.append(((MessageHeaderField) pair.getKey()).name() + KV_DELIMITER + pair.getValue() + FIELD_DELIMITER);
         }
 
         return h.toString();
     }
 
+    public int getContentLength() {
+        return this.toString().length();
+    }
+
     @Override
     public String toString() {
-        return MESSAGE_DELIMIER + getHeaderString() + HEADER_DELIMITER + getBodyString() + MESSAGE_DELIMIER;
+        return HEADER_DELIMITER + getHeaderString() + HEADER_DELIMITER + getBodyString();
+    }
+
+    public String getEncapsulated() {
+        return getContentLength() + "\n" + this.toString();
     }
 
     public Message setHeaderField(MessageHeaderField k, String v){

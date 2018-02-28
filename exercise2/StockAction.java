@@ -1,4 +1,4 @@
-
+import java.util.Map;
 import java.util.UUID;
 
 public abstract class StockAction {
@@ -15,15 +15,6 @@ public abstract class StockAction {
         m.setBodyParam("status", status.name());
         m.setBodyParam("uuid", uuid.toString());
         return m;
-        /*
-
-        return "stockName=" + stock.getName().name() +
-                "\nprice=" + price +
-                "\nstatus=" + status +
-                "\nuuid=" + uuid +
-                "\n";
-
-                */
     }
 
     public void hydrateFromServerString(String strRepresentation){
@@ -32,28 +23,6 @@ public abstract class StockAction {
         setUUID(UUID.fromString(m.getBody().get("uuid")));
         setPrice(Double.parseDouble(m.getBody().get("price")));
         setStatus(StockActionStatus.valueOf(m.getBody().get("status")));
-
-        /*
-        String fieldAssignements[] = strRepresentation.split("\n");
-        String assignementParts[] = null;
-        String fieldName = null;
-        String fieldValue = null;
-        for (String fieldAssignement: fieldAssignements) {
-            assignementParts = fieldAssignement.split("=");
-            if(assignementParts.length != 2) break;
-            fieldName = assignementParts[0];
-            fieldValue = assignementParts[1];
-
-            switch (fieldName) {
-                case "stockName": setStock(new Stock(StockName.valueOf(fieldValue)));
-                case "price": setPrice(Double.parseDouble(fieldValue));
-                case "status": setStatus(StockActionStatus.valueOf(fieldValue));
-                case "uuid": setUUID(UUID.fromString(fieldValue));
-            }
-        }
-        */
-
-
     }
 
     public void setStock(StockName stockName)
