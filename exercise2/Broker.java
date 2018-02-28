@@ -125,7 +125,11 @@ public class Broker {
         }
     }
 
-    public String searchAction(String dMin, String dMax, String actionName) {
+    public String searchActionPerDates(String dMin, String dMax, String actionName) {
         return fileLogger.searchLogFile(dMin, dMax, actionName);
+    }
+
+    public String searchActionPerName(String actionName) {
+        return fileLogger.searchLogFile(actionName);
     }
 }

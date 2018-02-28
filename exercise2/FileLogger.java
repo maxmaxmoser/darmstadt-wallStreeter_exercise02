@@ -47,6 +47,52 @@ public class FileLogger {
         }
     }
 
+    //Search the last-writed specified stock transaction
+    public String searchLogFile(String actionName){
+        //Input file which needs to be parsed
+        String fileToParse = pathToLogFile;
+        BufferedReader fileReader = null;
+
+
+        //Delimiter used in CSV file
+        final String DELIMITER = ";";
+        try
+        {
+            String lineMatched ="";
+            String line;
+            //Create the file reader
+            fileReader = new BufferedReader(new FileReader(fileToParse));
+
+            //Read the file line by line
+            while ((line = fileReader.readLine()) != null)
+            {
+                //Get all tokens available in line
+                String[] tokens = line.split(DELIMITER);
+
+                //print the token if the transaction date is between the min and max date
+                if((actionName.equals(tokens[1]))){
+                    lineMatched = ("Date : " + tokens[0] + " Nom de l'action : " + tokens[1] + " Prix : " + tokens[2]);
+                }
+            }
+            System.out.println(lineMatched);
+            return lineMatched;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try {
+                fileReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "";
+    }
+
+
+
     //Search the specified stock's data between dateMin and dateMax
     public String searchLogFile( String dMin, String dMax, String actionName){
         //Input file which needs to be parsed
@@ -77,6 +123,7 @@ public class FileLogger {
                 Date dateMax = df.parse(dMax);
 
                 //print the token if the transaction date is between the min and max date
+
                 if((transactionDate.after(dateMin))&&(transactionDate.before(dateMax)) && (actionName.equals(tokens[1]))){
                     //for(String token : tokens)
                     //{
@@ -112,7 +159,8 @@ public class FileLogger {
         fileLogger.writeToFile("apple","300");
         fileLogger.writeToFile("apple","400");
         fileLogger.writeToFile("apple","500");
-        fileLogger.searchLogFile("24/02/18","25/03/18","apple");
+       // fileLogger.searchLogFile("24/02/18","25/03/18","apple");
+       fileLogger.searchLogFile("apple");
     }
     */
 }

@@ -15,7 +15,7 @@ public class PriceService {
         String test = "APPL";
         Object[] params = new Object[]{new String("25/02/2018"), new String("25/03/2018"), new String(test)};
 
-        String result =  (String) client.execute("Broker.searchAction", params);
+        String result =  (String) client.execute("Broker.action", params);
         System.out.println("Liste des transactions de " + params[2] + ":\n" + result );
     }
 }
