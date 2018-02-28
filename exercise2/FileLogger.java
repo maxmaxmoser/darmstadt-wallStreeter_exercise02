@@ -33,7 +33,7 @@ public class FileLogger {
 
             textFile = new File(pathToLogFile);
             fileWriter = new FileWriter(textFile, true);
-            DateFormat df = new SimpleDateFormat("dd/MM/yy");//dd/MM/yy HH:mm:ss
+            DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
             Date dateobj = new Date();
             String currentDate = df.format(dateobj).toString();
             String logToAdd = currentDate+";"+stockName+";"+stockPrice+"\n";
@@ -68,9 +68,11 @@ public class FileLogger {
             {
                 //Get all tokens available in line
                 String[] tokens = line.split(DELIMITER);
+                String date = (tokens[0].split(" "))[0];  // get date without hour
+
 
                 DateFormat df = new SimpleDateFormat("dd/MM/yy");
-                Date transactionDate = df.parse(tokens[0]);
+                Date transactionDate = df.parse(date);
                 Date dateMin = df.parse(dMin);
                 Date dateMax = df.parse(dMax);
 
@@ -79,12 +81,13 @@ public class FileLogger {
                     //for(String token : tokens)
                     //{
                         //Print all tokens
-                        //System.out.println(token);
+                      //  System.out.println("Date : " + tokens[0] + " Nom de l'action : " + tokens[1] + " Prix : " + tokens[2]);
                         linesMatched += ("Date : " + tokens[0] + " Nom de l'action : " + tokens[1] + " Prix : " + tokens[2] + "\n");
                     //}
                 }
             }
-
+            System.out.println("Fonction");
+            System.out.println(linesMatched);
             return linesMatched;
         }
         catch (Exception e) {
@@ -100,8 +103,8 @@ public class FileLogger {
         }
         return "";
     }
-
-   /* Usage exemple of fileLogger
+    /*
+   // Usage exemple of fileLogger
    public static void main(String[] args) {
         FileLogger fileLogger = new FileLogger("text.csv");
         fileLogger.writeToFile("apple","100");
@@ -109,7 +112,7 @@ public class FileLogger {
         fileLogger.writeToFile("apple","300");
         fileLogger.writeToFile("apple","400");
         fileLogger.writeToFile("apple","500");
-        fileLogger.searchLogFile("24/02/18","27/02/18","apple");
-    }*/
-
+        fileLogger.searchLogFile("24/02/18","25/03/18","apple");
+    }
+    */
 }
