@@ -17,6 +17,5 @@ public class PriceService {
 
         Integer result = (Integer) client.execute("Broker.searchAction", params);
         System.out.println("Liste des transactions de " + params[2] + ":\n" + result );
-
     }
 }

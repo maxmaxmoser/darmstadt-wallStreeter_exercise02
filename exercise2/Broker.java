@@ -9,7 +9,6 @@ public class Broker {
     private ArrayList<StockBid> buyActionList;
     private ArrayList<StockAsk> sellActionList;
     private FileLogger fileLogger;
-    private static final int port = 8080;
 
     public Broker(){
         buyActionList = new ArrayList<StockBid>();
@@ -128,30 +127,5 @@ public class Broker {
 
     public String searchAction(String dMin, String dMax, String actionName) {
         return fileLogger.searchLogFile(dMin, dMax, actionName);
-    }
-
-    public static void main (String [] args) {
-        try {
-
-            WebServer webServer = new WebServer(port);
-
-            XmlRpcServer xmlRpcServer = webServer.getXmlRpcServer();
-            PropertyHandlerMapping phm = new PropertyHandlerMapping();
-
-            phm.addHandler( "Broker", Broker.class);
-            xmlRpcServer.setHandlerMapping(phm);
-
-            XmlRpcServerConfigImpl serverConfig =
-                    (XmlRpcServerConfigImpl) xmlRpcServer.getConfig();
-            // serverConfig.setEnabledForExtensions(true);
-            // serverConfig.setContentLengthOptional(false);
-
-            webServer.start();
-
-            System.out.println("The Calculator Server has been started..." );
-
-        } catch (Exception exception) {
-            System.err.println("JavaServer: " + exception);
-        }
     }
 }
