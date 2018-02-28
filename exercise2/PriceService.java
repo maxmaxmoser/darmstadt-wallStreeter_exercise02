@@ -48,9 +48,9 @@ public class PriceService {
                                     int ordinal = Integer.parseInt(line);
                                     stockSelected = StockName.values()[ordinal].name();
                                     System.out.println("StockeSlected : " + stockSelected);
-                                    Object[] params = new Object[]{new String("25/02/2018"), new String("25/03/2018"), new String(stockSelected)};
+                                    Object[] params = new Object[]{new String(stockSelected)};
 
-                                    String result =  (String) client.execute("Broker.searchAction", params);
+                                    String result =  (String) client.execute("Broker.searchActionPerName", params);
                                     System.out.println("Liste des transactions de " + params[2] + ":\n" + result );
                                     break;
                                 }
@@ -84,7 +84,7 @@ public class PriceService {
                                         System.out.println("dateAfter : " + dateAfter + "\n" + " dateBefore : " + dateBefore);
                                         Object[] params = new Object[]{new String(dateAfter), new String(dateBefore), new String(stockSelected)};
 
-                                        String result =  (String) client.execute("Broker.searchAction", params);
+                                        String result =  (String) client.execute("Broker.searchActionPerDates", params);
                                         System.out.println("Liste des transactions de " + params[2] + ":\n" + result );
                                         break;
                                     }
